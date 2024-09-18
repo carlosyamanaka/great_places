@@ -26,7 +26,7 @@ class PlacesListScreen extends StatelessWidget {
         future: Provider.of<GreatPlaces>(context, listen: false).loadPlaces(),
         builder: (ctx, snapshot) => snapshot.connectionState ==
                 ConnectionState.waiting
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Consumer<GreatPlaces>(
                 builder: (ctx, greatPlaces, ch) => greatPlaces.itemsCount == 0
                     ? ch ?? const Text('Nenhum local cadastrado')
@@ -37,6 +37,8 @@ class PlacesListScreen extends StatelessWidget {
                                 FileImage(greatPlaces.itemByIndex(i).image),
                           ),
                           title: Text(greatPlaces.itemByIndex(i).title),
+                          subtitle: Text(
+                              greatPlaces.itemByIndex(i).location.address!),
                           onTap: () {},
                         ),
                         itemCount: greatPlaces.itemsCount,
