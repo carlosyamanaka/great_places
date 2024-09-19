@@ -17,7 +17,7 @@ class GreatPlaces with ChangeNotifier {
           (item) => Place(
             id: item['id'],
             title: item['title'],
-            image: item['image'],
+            image: File(item['image']),
             location: PlaceLocation(
                 latitude: item['latitude'],
                 longitude: item['longitude'],
