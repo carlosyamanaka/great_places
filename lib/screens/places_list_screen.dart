@@ -29,7 +29,7 @@ class PlacesListScreen extends StatelessWidget {
             ? const Center(child: CircularProgressIndicator())
             : Consumer<GreatPlaces>(
                 builder: (ctx, greatPlaces, ch) => greatPlaces.itemsCount == 0
-                    ? ch ?? const Text('Nenhum local cadastrado')
+                    ? ch!
                     : ListView.builder(
                         itemBuilder: (ctx, i) => ListTile(
                           leading: CircleAvatar(
@@ -39,11 +39,16 @@ class PlacesListScreen extends StatelessWidget {
                           title: Text(greatPlaces.itemByIndex(i).title),
                           subtitle: Text(
                               greatPlaces.itemByIndex(i).location.address!),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.PLACE_DETAIL,
+                              arguments: greatPlaces.itemByIndex(i),
+                            );
+                          },
                         ),
                         itemCount: greatPlaces.itemsCount,
                       ),
-                child: const Text('Nenhum local cadastrado!'),
+                child: const Center(child: Text('Nenhum local cadastrado!'),),
               ),
       ),
     );

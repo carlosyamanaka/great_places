@@ -36,9 +36,11 @@ class _MapScreenState extends State<MapScreen> {
         actions: [
           if (!widget.isReadonly)
             IconButton(
-              onPressed: _pickedPosition == null ? null : () {
-                Navigator.of(context).pop(_pickedPosition);
-              },
+              onPressed: _pickedPosition == null
+                  ? null
+                  : () {
+                      Navigator.of(context).pop(_pickedPosition);
+                    },
               icon: const Icon(Icons.check),
             ),
         ],
@@ -53,12 +55,13 @@ class _MapScreenState extends State<MapScreen> {
         ),
         // ignore: unnecessary_null_in_if_null_operators
         onTap: widget.isReadonly ? null : _selectPosition,
-        markers: _pickedPosition == null
+        markers: (_pickedPosition == null && !widget.isReadonly)
             ? {}
             : {
                 Marker(
                   markerId: const MarkerId('p1'),
-                  position: _pickedPosition!,
+                  position:
+                      _pickedPosition ?? widget.initialLocation.toLatLng(),
                 ),
               },
       ),

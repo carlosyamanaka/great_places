@@ -27,9 +27,23 @@ class _LocationInputState extends State<LocationInput> {
   }
 
   Future<void> _getCurrentUserLocation() async {
-    final locData = await Location().getLocation();
+    try {
+      final locData = await Location().getLocation();
 
-    _showPreview(locData.latitude!, locData.longitude!);
+      _showPreview(locData.latitude!, locData.longitude!);
+      widget.onSelectPosition(
+        LatLng(
+          locData.latitude!,
+          locData.longitude!,
+        ),
+      );
+    } catch (e) {
+      const AlertDialog(
+        title: Text('Erro'),
+        content: Text(
+            'Ocorreu um erro inesperado ao tentar obter a localização. Tente novamente mais tarde.'),
+      );
+    }
   }
 
   Future<void> _selectOnMap() async {

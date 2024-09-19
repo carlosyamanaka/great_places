@@ -18,11 +18,14 @@ class GreatPlaces with ChangeNotifier {
             id: item['id'],
             title: item['title'],
             image: item['image'],
-            location:
-                PlaceLocation(latitude: item['latitude'], longitude: item['longitude'], address: item['address']),
+            location: PlaceLocation(
+                latitude: item['latitude'],
+                longitude: item['longitude'],
+                address: item['address']),
           ),
         )
         .toList();
+
     notifyListeners();
   }
 
@@ -58,7 +61,8 @@ class GreatPlaces with ChangeNotifier {
       ),
     );
     _items.add(newPlace);
-    DbUtil.insert('places', {
+
+    await DbUtil.insert('places', {
       'id': newPlace.id,
       'title': newPlace.title,
       'image': newPlace.image.path,
@@ -66,6 +70,7 @@ class GreatPlaces with ChangeNotifier {
       'longitude': position.longitude,
       'address': address,
     });
+
     notifyListeners();
   }
 }
